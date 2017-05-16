@@ -1,15 +1,12 @@
 #include "holberton.h"
 
 /**
- * op_add - Makes the sum of two numbers
- * @arg1: First operand
- * @arg2: Second operand
+ * _puts_recursion- prints a string recursively
+ * @s: string
  *
- * Description: This is a longer description.
- * Don't forget that a line should not exceed 80 characters.
- * But you're totally free to use several lines to properly
- * describe your function
- * Return: The sum of the two parameters
+ * Description: Prints a string recursively followed by new line
+ * using write
+ * Return: Void
  */
 
  void _puts_recursion(char *s)

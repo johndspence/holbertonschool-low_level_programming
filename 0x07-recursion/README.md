@@ -34,30 +34,35 @@ int factorial(int n);
 
 [_pow_recursion](../0x07-recursion/4-pow_recursion.c)
 ```c
-/* _pow_recursion - returns the value of x raised to the power of y using recursion. */
+/* _pow_recursion - returns the value of x raised to the power of y using
+ * recursion. */
 int _pow_recursion(int x, int y);
 ```
 
 [_sqrt_recursion](../0x07-recursion/5-sqrt_recursion.c)
 ```c
-/* _sqrt_recursion - returns the natural square root of a number using * recursion. */
+/* _sqrt_recursion - returns the natural square root of a number using
+ * recursion. */
 int _sqrt_recursion(int n);
 ```
 
 [is_prime_number](../0x07-recursion/6-is_prime_number.c)
 ```c
-/* is_prime_number - returns 1 if the input integer is a prime number, otherwise returns 0, using recursion. */
+/* is_prime_number - returns 1 if the input integer is a prime number,
+ * otherwise returns 0, using recursion. */
 int is_prime_number(int n);
 ```
 
 [is_palindrome](../0x07-recursion/7-is_palindrome.c)
 ```c
-/* is_palindrome - returns 1 if a string is a palindrome and 0 if not, using recursion. */
+/* is_palindrome - returns 1 if a string is a palindrome and 0 if not, using
+ * recursion. */
 int is_palindrome(char *s);
 ```
 
 [wildcmp](../0x07-recursion/100-wildcmp.c)
 ```c
-/* wildcmp - compares two strings and returns 1 if the strings can be considered identical, otherwise returns 0, using recursion. */
+/* wildcmp - compares two strings and returns 1 if the strings can be
+ * considered identical, otherwise returns 0, using recursion. */
 int wildcmp(char *s1, char *s2);
 ```

@@ -1,5 +1,10 @@
 # Recursion Project
 
+## Compile
+Tested on ubuntu 14.04LTS
+Compiled using gcc 4.8.4
+gcc -Wall -Werror -Wextra -pedantic
+
 ## Functions
 
 [_putchar.c](../0x07-recursion/_putchar.c)

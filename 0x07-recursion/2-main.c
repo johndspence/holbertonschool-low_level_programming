@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <stdio.h>
 
 /**
  * main - check the code for Holberton School students.
@@ -7,6 +8,9 @@
  */
 int main(void)
 {
-	_puts_recursion("Betty Holberton");
+	int n;
+
+	n = _strlen_recursion("Corbin Coleman");
+	printf("%d\n", n);
 	return (0);
 }

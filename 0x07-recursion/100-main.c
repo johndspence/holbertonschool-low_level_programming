@@ -12,7 +12,7 @@ int main(void)
 
 	r = wildcmp("main.c", "*.c");
 	printf("%d\n", r);
-	r = wildcmp("main.c", "m*a*i*n*.*c*");
+	r = wildcmp("main.c", "*m*a*i*n*.*c*");
 	printf("%d\n", r);
 	r = wildcmp("main.c", "main.c");
 	printf("%d\n", r);
@@ -35,9 +35,9 @@ int main(void)
 	r = wildcmp("abc", "*b");
 	printf("%d\n\n", r);
 
-	r = wildcmp("abc", "****");
+	r = wildcmp("", "*");
 	printf("%d\n", r);
-	r = wildcmp("abc", "a****");
+	r = wildcmp("main.c", "ma*********************************************************d");
 	printf("%d\n", r);
 	r = wildcmp("this\0", "this*");
 	printf("%d\n", r);

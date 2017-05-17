@@ -21,7 +21,8 @@ int sqrt_iterate(int n, int i)
 }
 
 /**
-* _sqrt_recursion - returns the natural square root of a number using recursion.
+* _sqrt_recursion - returns the natural square root of a number using
+ * recursion.
  * @n: A number.
  *
  * Return: Square root of a number (int).

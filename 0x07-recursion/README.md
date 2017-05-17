@@ -1,4 +1,4 @@
-# Recursion Project
+# Recursion Exercises: 0x07-recursion
 
 ## Compile
 Tested on ubuntu 14.04LTS

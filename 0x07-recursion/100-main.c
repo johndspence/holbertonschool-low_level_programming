@@ -34,11 +34,12 @@ int main(void)
 	printf("%d\n", r);
 	r = wildcmp("abc", "*b");
 	printf("%d\n\n", r);
+
 	r = wildcmp("abc", "****");
 	printf("%d\n", r);
 	r = wildcmp("abc", "a****");
 	printf("%d\n", r);
-	r = wildcmp("abc", "****b");
+	r = wildcmp("this\0", "this*");
 	printf("%d\n", r);
 	return (0);
 }

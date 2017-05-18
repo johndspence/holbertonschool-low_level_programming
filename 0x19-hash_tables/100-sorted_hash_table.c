@@ -26,13 +26,16 @@ shash_table_t *shash_table_create(unsigned long int size)
 	if (new_hash_table_ptr->array == NULL)
 	{
 		free(new_hash_table_ptr->array);
+		free(new_hash_table_ptr);
 		return (NULL);
 	}
-	new_hash_table_ptr->size = size;
 	for (i = 0; i < size; i++)
 	{
 		new_hash_table_ptr->array[i] = NULL;
 	}
+	new_hash_table_ptr->size = size;
+	new_hash_table_ptr->shead = NULL;
+	new_hash_table_ptr->stail = NULL;
 	return (new_hash_table_ptr);
 }
 

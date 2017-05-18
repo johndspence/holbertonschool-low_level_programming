@@ -5,17 +5,17 @@
  * @size: number of elements in the hash table array.
  *
  * Return: a pointer to the newly created hash table.
- *
  */
 hash_table_t *hash_table_create(unsigned long int size)
 {
-	hash_table_t *hash_table_ptr;
 	unsigned long int i;
+	hash_table_t *hash_table_ptr;
 
 	if (size == 0)
 	{
 		return (NULL);
 	}
+	hash_table_ptr = NULL;
 	hash_table_ptr = malloc(sizeof(hash_table_t));
 	if (hash_table_ptr == NULL)
 	{
@@ -29,7 +29,7 @@ hash_table_t *hash_table_create(unsigned long int size)
 		return (NULL);
 	}
 	hash_table_ptr->size = size;
-	for (i = 0; i < size; i++)
+	for (i = 0; i < hash_table_ptr->size; i++)
 	{
 		hash_table_ptr->array[i] = NULL;
 	}

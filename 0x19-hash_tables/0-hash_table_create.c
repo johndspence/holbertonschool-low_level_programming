@@ -1,16 +1,11 @@
 #include "hash_tables.h"
 
 /**
- * hash_table_create - creates a hash table of size.
- * @size: size of the array of each hash node.
+ * hash_table_create - creates a hash table with chaining.
+ * @size: number of elements in the has table array.
+ *
  * Return: a pointer to the newly created hash table.
- * Steps:
- * 1. Create instance of HashTable using malloc
- * 2. Create instance of array to hold pointers to List nodes,
- *    also using malloc respecting size
- * 3. Populate size of this instance of HashTable
- * 4. Populate array of this instance of HashTable
- * 5. Return pointer to this instance of HashTable
+ * 
  */
 hash_table_t *hash_table_create(unsigned long int size)
 {

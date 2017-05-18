@@ -3,6 +3,8 @@
 /**
  * hash_table_set - Adds an key/value to a hash table.
  * @ht: Pointer to the hash table.
+ * Compile: gcc -Wall -pedantic -Werror -Wextra 0-hash_table_create.c 3-main.c
+ * 2-key_index.c 1-djb2.c 3-hash_table_set.c -o c
  * @key: Key to be added.
  * @value: Value to be added.
  * Return: 1 if success, 0 if otherwise.

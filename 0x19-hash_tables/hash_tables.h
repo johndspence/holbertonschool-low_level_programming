@@ -34,24 +34,6 @@ typedef struct hash_table_s
 	hash_node_t **array;
 } hash_table_t;
 
-/**
- * struct List - hash node s
- * @key : The key string of a pair
- * The key is unique in the HashTable
- *
- * @value : The value corresponding to a key
- * A value is not unique. It can correspond to several keys
- *
- * @next : A pointer to the next node of the List
- */
-typedef struct List
-{
-	char *key;
-	char *value;
-	struct List *next;
-} List;
-
-
 hash_table_t *hash_table_create(unsigned long int size);
 unsigned long int hash_djb2(const unsigned char *str);
 unsigned long int key_index(const unsigned char *key, unsigned long int size);

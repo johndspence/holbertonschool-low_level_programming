@@ -22,11 +22,6 @@ hash_table_t *hash_table_create(unsigned long int size)
 	{
 		return (NULL);
 	}
-	hash_table_ptr = malloc(sizeof(hash_table_t));
-	if (hash_table_ptr == NULL)
-	{
-		return (NULL);
-	}
 	array = malloc(sizeof(*array) * size);
 	if (array == NULL)
 	{
@@ -36,6 +31,12 @@ hash_table_t *hash_table_create(unsigned long int size)
 	{
 		array[i] = NULL;
 	}
+	hash_table_ptr = malloc(sizeof(hash_table_t));
+	if (hash_table_ptr == NULL)
+	{
+		return (NULL);
+	}
+
 	hash_table_ptr->size = size;
 	hash_table_ptr->array = array;
 	return (hash_table_ptr);

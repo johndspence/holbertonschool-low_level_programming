@@ -37,16 +37,6 @@ shash_table_t *shash_table_create(unsigned long int size)
 }
 
 /**
- * linked_list_sort - sorts a linked list.
- *
- *
- */
-/*void sort_linked_list(shash_table_t *ht, unsigned long index)
-{
-	return;
-}*/
-
-/**
  * shash_table_set - Adds a key/value to a hash table.
  * @ht: Pointer to the hash table.
  * Compile: gcc -Wall -pedantic -Werror -Wextra 0-hash_table_create.c 3-main.c
@@ -133,7 +123,7 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 }
 
 /**
- * hash_table_print - prints key value pairs from a hash table in json format.
+ * shash_table_print_rev - prints key value pairs from a hash table in json.
  *
  * @ht: hash_table_t to be searched and printed.
  */

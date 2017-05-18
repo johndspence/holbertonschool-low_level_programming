@@ -24,6 +24,7 @@ int main(void)
 	hash_table_set(ht, "subgenera", "holberton");
 	hash_table_set(ht, "urites", "holberton");
 	hash_table_set(ht, "dram", "holberton");
+	hash_table_set(ht, "betty", "NOT holberton");
 	hash_table_set(ht, "vivency", "holberton");
 	return (EXIT_SUCCESS);
 }

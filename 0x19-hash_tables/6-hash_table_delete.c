@@ -20,7 +20,7 @@ void hash_table_delete(hash_table_t *ht)
 	for (i = 0; i < ht->size; i++)
 	{
 		current_node_ptr = ht->array[i];
-		while(current_node_ptr)
+		while (current_node_ptr)
 		{
 			temp_node_ptr = current_node_ptr;
 			current_node_ptr = current_node_ptr->next;

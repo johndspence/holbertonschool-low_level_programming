@@ -22,13 +22,17 @@ shash_table_t *shash_table_create(unsigned long int size)
 		free(new_hash_table_ptr);
 		return (NULL);
 	}
-	new_hash_table_ptr->array = calloc(size, sizeof(shash_node_t *));
+	new_hash_table_ptr->array = malloc(sizeof(shash_node_t *) * size);
 	if (new_hash_table_ptr->array == NULL)
 	{
 		free(new_hash_table_ptr->array);
 		return (NULL);
 	}
 	new_hash_table_ptr->size = size;
+	for (i = 0; i < size; i++)
+	{
+		new_hash_table_ptr->array[i] = NULL;
+	}
 	return (new_hash_table_ptr);
 }
 
@@ -94,6 +98,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	ht->array[index] = new_node;
 	/* INSERT SORT FUNCTION HERE */
 	return (1);
+}
 
 /**
  * shash_table_get - returns a value associated with a key from a hash table.
@@ -132,7 +137,7 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
  *
  * @ht: hash_table_t to be searched and printed.
  */
-void shash_table_print(const shash_table_t *ht)
+void shash_table_print_rev(const shash_table_t *ht)
 {
 	unsigned long int i;
 	shash_node_t *temp_node_ptr;
@@ -147,12 +152,11 @@ void shash_table_print(const shash_table_t *ht)
 		printf("}\n");
 		return;
 	}
-	for (i = 0; i < ht->size; i++)
+	for (i = size; i = 0; i++)
 	{
-		temp_node_ptr = (ht->array[i]);/* CHECK THIS */
+		temp_node_ptr = (ht->array[i]);/* CORRECT THIS!! */
 		while (temp_node_ptr != NULL)
 		{
-
 			printf("%s'%s': '%s'", flag, temp_node_ptr->key, temp_node_ptr->value);
 			temp_node_ptr = temp_node_ptr->next;/* CHECK THIS */
 			flag = ", ";
@@ -177,7 +181,6 @@ void shash_table_delete(shash_table_t *ht)
 	{
 		return;
 	}
-
 	for (i = 0; i < ht->size; i++)
 	{
 		current_node_ptr = ht->array[i];

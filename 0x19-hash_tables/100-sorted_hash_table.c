@@ -31,16 +31,16 @@ shash_table_t *shash_table_create(unsigned long int size)
 	new_hash_table_ptr->size = size;
 	return (new_hash_table_ptr);
 }
+
 /**
  * linked_list_sort - sorts a linked list.
  *
  *
  */
-void sort_linked_list(shash_table_t *ht, unsigned long index)
+/*void sort_linked_list(shash_table_t *ht, unsigned long index)
 {
 	return;
-}
-
+}*/
 
 /**
  * shash_table_set - Adds a key/value to a hash table.

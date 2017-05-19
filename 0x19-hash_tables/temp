@@ -25,3 +25,85 @@ void sort_linked_list(shash_table_t *ht, unsigned long index)
  {
  	return;
  }
+
+
+ /**
+  * insert_sort - inserts a new node into a linked list and sorts.
+  * @shead: linked list head.
+  * @stail: linked list tail.
+  * @new_node: new node
+  * Return: void.
+  */
+
+ void insert_sort(shash_node_t **shead, shash_node_t **stail,
+ 	shash_node_t *new_node)
+ {
+ 	shash_node_t *temp_node_ptr1;
+ 	shash_node_t *temp_node_ptr2;
+
+ 	temp_node_ptr1 = *shead;
+ 	if ((*shead) == NULL)/* This is the first node */
+ 	{
+ 		new_node->snext = (*shead);/* NULL? */
+ 		(*shead) = new_node;
+ 		(*stail) = new_node;
+ 		return;
+ 	}
+ 	else if ((*shead)->snext == NULL)/* Only one prior node */
+ 	{
+ 		if (strcmp((*shead)->key, new_node->key) > 0)/*insert before.strcmp tolower*/
+ 		{
+ 			new_node->snext = (*shead);
+ 			(*shead)->sprev = new_node;
+ 			new_node->sprev = NULL;
+ 			(*shead) = new_node;
+ 		}
+ 		else /*insert after */
+ 		{
+ 			(*shead)->snext = new_node;
+ 			new_node->sprev = (*shead);
+ 			new_node->snext = NULL;
+ 			(*stail) = new_node;
+ 		}
+ 		return;
+ 	}
+ 	else
+ 	{
+ 		while (temp_node_ptr1->snext != NULL && (strcmp(temp_node_ptr1->key,
+ 			new_node->key) < 1))
+ 		{
+ 			temp_node_ptr2 = temp_node_ptr1->snext;
+ 			if ((strcmp(temp_node_ptr2->key, new_node->key) > 0) ||
+ 				temp_node_ptr2->snext == NULL)
+ 			{
+ 				if(!(temp_node_ptr2->snext == NULL &&
+ 					!(strcmp(temp_node_ptr2->key, new_node->key) > 0)))
+ 				{
+ 					temp_node_ptr2->snext = new_node;
+ 					new_node->sprev = temp_node_ptr2;
+ 					new_node->snext = NULL;
+ 					(*stail) = new_node;
+ 					return;
+ 				}
+ 				else
+ 				{
+ 					temp_node_ptr1->snext = new_node;
+ 					new_node->snext = temp_node_ptr2;
+ 					new_node->sprev = temp_node_ptr1;
+ 					temp_node_ptr2->sprev = new_node;
+ 					return;
+ 				}
+ 			}
+ 			temp_node_ptr1 = temp_node_ptr1->snext;
+ 		}
+ 		new_node->snext = temp_node_ptr1;
+ 		temp_node_ptr1->sprev = new_node;
+ 		new_node->sprev = NULL;
+ 		(*shead) = new_node;
+ 		return;
+ 	}
+ }
+
+
+ /*void insert_sort(shash_node_t **shead, shash_node_t **stail,
+ 	shash_node_t *new_node);*/

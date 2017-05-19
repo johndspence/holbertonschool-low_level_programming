@@ -12,21 +12,18 @@ shash_table_t *shash_table_create(unsigned long int size)
 	shash_table_t *new_hash_table_ptr;
 	unsigned long int i;
 
-	if (size == 0)
-	{
-		return (NULL);
-	}
 	new_hash_table_ptr = malloc(sizeof(shash_table_t));
-	if (new_hash_table_ptr == NULL)
+	if (size < 1 || !new_hash_table_ptr)
 	{
-		free(new_hash_table_ptr);
 		return (NULL);
 	}
 	new_hash_table_ptr->array = malloc(sizeof(shash_node_t *) * size);
 	if (new_hash_table_ptr->array == NULL)
 	{
-		free(new_hash_table_ptr->array);
-		free(new_hash_table_ptr);
+		/**
+		 *free(new_hash_table_ptr->array);
+		 *free(new_hash_table_ptr);
+		 */
 		return (NULL);
 	}
 	for (i = 0; i < size; i++)
@@ -36,7 +33,61 @@ shash_table_t *shash_table_create(unsigned long int size)
 	new_hash_table_ptr->size = size;
 	new_hash_table_ptr->shead = NULL;
 	new_hash_table_ptr->stail = NULL;
+	printf("HASH TABLE CREATED\n");
 	return (new_hash_table_ptr);
+}
+
+/**
+ * insert_sort - inserts a new node into a linked list and sorts.
+ * @ht: hash_table
+ * @new: new hash table pointer.
+ * @tmp: temp node pointer
+ *
+ * Return: void.
+ */
+void insert_sort(shash_table_t *ht, shash_node_t *new, shash_node_t *tmp)
+{
+	shash_node_t *pre;
+
+	pre = new;
+	if (!ht->shead) /* if no nodes in sorted list */
+	{
+		ht->shead = new;
+		ht->stail = new;
+
+		new->sprev = NULL;
+		new->snext = NULL;
+	}
+	else /* add and sort new node */
+	{
+		tmp = ht->shead;
+		while (tmp->snext && strcmp(new->key, tmp->key) > 0)
+		{
+			tmp = tmp->snext;
+		}
+		if (tmp == ht->shead && ht->stail != tmp)
+		{
+			ht->shead = new;
+			new->snext = tmp;
+			new->sprev = NULL;
+			tmp->sprev = new;
+		}
+		else if (!tmp->snext && strcmp(new->key, tmp->key) > 0)
+		{
+			tmp->snext = new;
+			new->sprev = tmp;
+			new->snext = NULL;
+			ht->stail = new;
+		}
+		else
+		{
+			pre = tmp->sprev;
+			pre->snext = new;
+			new->snext = tmp;
+			new->sprev = pre;
+			tmp->sprev = new;
+		}
+	}
 }
 
 /**
@@ -54,42 +105,27 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	shash_node_t *temp_node_ptr;
 	unsigned long int index;
 
-	if (!ht || !key || !value || strlen(key) == 0)
+	if (ht == NULL || key == NULL || value == NULL)
 		return (0);
-	index = key_index((unsigned char *)key, ht->size);
-	if (ht->array[index])
+	index = key_index((const unsigned char *)key, ht->size);
+	new_node = malloc(sizeof(shash_node_t));
+	if (new_node == NULL)
+		return (0);
+	if (ht->array[index] != NULL)
 	{
 		temp_node_ptr = ht->array[index];
-		while (temp_node_ptr && strcmp(temp_node_ptr->key, key) != 0)
+		if (temp_node_ptr != NULL && (strcmp(temp_node_ptr->key, key) == 0))
 		{
-			temp_node_ptr = temp_node_ptr->next;
-		}
-		if (temp_node_ptr && strcmp(temp_node_ptr->key, key) == 0)
-		{
-			free(temp_node_ptr->value);
 			temp_node_ptr->value = strdup(value);
 			return (1);
 		}
 	}
-	new_node = malloc(sizeof(shash_node_t));
-	if (new_node == NULL)
-		return (0);
 	new_node->key = strdup(key);
-	if (new_node->key == NULL)
-	{
-		free(new_node);
-		return (0);
-	}
 	new_node->value = strdup(value);
-	if (new_node->value == NULL)
-	{
-		free(new_node->key);
-		free(new_node);
-		return (0);
-	}
-	new_node->next = ht->array[index];
+	new_node->snext = ht->array[index];
 	ht->array[index] = new_node;
 	/* INSERT SORT FUNCTION HERE */
+	insert_sort(ht, new_node, temp_node_ptr);
 	return (1);
 }
 
@@ -106,10 +142,13 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 	shash_node_t *temp_node_ptr;
 	int key_len;
 
-	if (!ht || !key || !ht->array)
+	temp_node_ptr = (ht->shead);
+	if (!ht || !key || !temp_node_ptr)
 		return (NULL);
 	key_len = strlen(key);
-	index = key_index((const unsigned char *)key, ht->size);
+
+	index = key_index((const unsigned char *)key, key_len);
+
 	if (ht->array[index])
 	{
 		temp_node_ptr = ht->array[index];
@@ -126,32 +165,64 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 }
 
 /**
+ * shash_table_print - prints key value pairs from a hash table in json.
+ *
+ * @ht: shash_table_t to be searched and printed.
+ */
+void shash_table_print(const shash_table_t *ht)
+{
+	shash_node_t *temp_node_ptr;
+
+	if (ht == NULL)
+	{
+		return;
+	}
+	printf("{");
+
+	if (ht->array == NULL)
+	{
+		printf("}\n");
+		return;
+	}
+	temp_node_ptr = ht->shead;
+	while (temp_node_ptr != NULL)
+	while (temp_node_ptr != NULL)
+	{
+		if (temp_node_ptr->snext != NULL)
+			printf("'%s': '%s', ", temp_node_ptr->key, temp_node_ptr->value);
+		else
+			printf("'%s': '%s'", temp_node_ptr->key, temp_node_ptr->value);
+		temp_node_ptr = temp_node_ptr->snext;
+	}
+	printf("}\n");
+}
+
+/**
  * shash_table_print_rev - prints key value pairs from a hash table in json.
  *
  * @ht: hash_table_t to be searched and printed.
  */
 void shash_table_print_rev(const shash_table_t *ht)
 {
-	unsigned long int i;
 	shash_node_t *temp_node_ptr;
 	char *flag;
 
 	flag = "";
 	if (!ht)
 		return;
+	temp_node_ptr = ht->stail;
 	printf("{");
-	if (!ht->array)
+	if (!temp_node_ptr)
 	{
 		printf("}\n");
 		return;
 	}
-	for (i = size; i = 0; i++)
+	while (temp_node_ptr != NULL)
 	{
-		temp_node_ptr = (ht->array[i]);/* CORRECT THIS!! */
-		while (temp_node_ptr != NULL)
+		while (temp_node_ptr->sprev != NULL)
 		{
 			printf("%s'%s': '%s'", flag, temp_node_ptr->key, temp_node_ptr->value);
-			temp_node_ptr = temp_node_ptr->next;/* CHECK THIS */
+			temp_node_ptr = temp_node_ptr->sprev;
 			flag = ", ";
 		}
 	}
@@ -180,7 +251,7 @@ void shash_table_delete(shash_table_t *ht)
 		while (current_node_ptr)
 		{
 			temp_node_ptr = current_node_ptr;
-			current_node_ptr = current_node_ptr->next;
+			current_node_ptr = current_node_ptr->snext;
 			free(temp_node_ptr->key);
 			free(temp_node_ptr->value);
 			free(temp_node_ptr);
